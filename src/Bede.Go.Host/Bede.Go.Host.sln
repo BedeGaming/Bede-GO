@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bede.Go.Contracts", "Bede.G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bede.Go.Core", "Bede.Go.Core\Bede.Go.Core.csproj", "{B6362974-9A3C-4910-90F2-1F5E64350227}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bede.GO.Host.Mac", "Bede.GO.Host.Mac\Bede.GO.Host.Mac.csproj", "{FEAD9FFB-BFF3-4613-91C2-77B14A883B18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B6362974-9A3C-4910-90F2-1F5E64350227}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6362974-9A3C-4910-90F2-1F5E64350227}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6362974-9A3C-4910-90F2-1F5E64350227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEAD9FFB-BFF3-4613-91C2-77B14A883B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEAD9FFB-BFF3-4613-91C2-77B14A883B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEAD9FFB-BFF3-4613-91C2-77B14A883B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEAD9FFB-BFF3-4613-91C2-77B14A883B18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Bede.GO.Host.Mac</RootNamespace>
     <AssemblyName>Bede.GO.Host.Mac</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +52,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Mvc" />
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
@@ -63,6 +72,26 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\ApiError.cs" />
+    <Compile Include="Models\GetGamesRequest.cs" />
+    <Compile Include="Controllers\GamesController.cs" />
+    <Compile Include="Autofac\AutofacModule.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bede.Go.Contracts\Bede.Go.Contracts.csproj">
+      <Project>{4136A0A6-C52E-45B4-A820-B85B58010CE9}</Project>
+      <Name>Bede.Go.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bede.Go.Core\Bede.Go.Core.csproj">
+      <Project>{B6362974-9A3C-4910-90F2-1F5E64350227}</Project>
+      <Name>Bede.Go.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Autofac\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
