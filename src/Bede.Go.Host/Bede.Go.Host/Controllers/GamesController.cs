@@ -3,14 +3,15 @@ using Bede.Go.Core.Helpers;
 using Bede.Go.Core.Services;
 using Bede.Go.Host.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace Bede.Go.Host.Controllers
 {
 
-    public class GamesController : Controller
+    public class GamesController : ApiController
     {
         private readonly ICrudService<Game> _gamesService;
 
@@ -21,19 +22,14 @@ namespace Bede.Go.Host.Controllers
 
         [HttpGet]
         [Route("api/games")]
-        public async Task<ActionResult> GetGames(GetGamesRequest request)
+        public async Task<IHttpActionResult> GetGames([FromUri]GetGamesRequest request)
         {
             if(request == null)
             {
-                SetBadRequestStatusCode();
-                return Json(new ApiError { Error = "Request was not provided." });
+                return BadRequest("Request was not provided");
             }
-            
-            if(!ModelState.IsValid)
-            {
-                SetBadRequestStatusCode();
-                return Json(new ApiError { Error = "Request was invalid.", Data = ModelState });
-            }
+
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
             var currentLocation = new Location { Latitude = request.Latitude, Longitude = request.Longitude };
 
@@ -48,32 +44,21 @@ namespace Bede.Go.Host.Controllers
             return Json(games);
         }
 
-        private void SetBadRequestStatusCode()
-        {
-            this.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-        }
-
         [HttpPost]
         [Route("api/games/{id}/join")]
-        public async Task<ActionResult> JoinGame(long id)
+        public async Task<IHttpActionResult> JoinGame(long id)
         {
             throw new NotImplementedException();
 
             //var game = await _gamesService.Read(id);
 
             //// Validate game can be joined
-            //if(await CanGameBeJoined(game))
+            //if(await GamesHelper.CanGameBeJoined(game))
             //{
 
             //}
 
             //return Json(game);
-        }
-
-        private async Task<bool> CanGameBeJoined(Game game)
-        {
-            // TODO
-            return await Task.FromResult(true);
         }
     }
 }

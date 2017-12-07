@@ -19,5 +19,10 @@ namespace Bede.Go.Core.Helpers
                     && game.Location.Longitude > currentLocation.Longitude - 1
                     && game.StartTime > DateTime.UtcNow;
         }
+
+        public static async Task<bool> CanPlayerJoinGame(Player currentPlayer, Game game)
+        {
+            return await Task.FromResult(true);
+        }
     }
 }
