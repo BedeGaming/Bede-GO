@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Helpers\GamesHelper.cs" />
     <Compile Include="Services\CrudService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -14,6 +14,7 @@ namespace Bede.Go.Core.Services
         Task<IQueryable<IType>> Read(long[] ids);
         Task Update(IType entity);
         Task Delete(long id);
+        Task<IQueryable<IType>> Query();
     }
 
     public class CrudService<TType> : ICrudService<TType> where TType : class, IIdentifiable
@@ -54,6 +55,11 @@ namespace Bede.Go.Core.Services
             var entity= await Read(id).ConfigureAwait(false);
             _context.DbSet.Remove(entity);
             _context.SaveChanges();
+        }
+
+        public async Task<IQueryable<TType>> Query()
+        {
+            return _context.DbSet;
         }
     }
 }
