@@ -20,5 +20,6 @@ namespace Bede.Go.Contracts
         public BedeGoMigrationContext() : base(DatabaseNames.BedeGo) {}
 
         public DbSet<Game> Games { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }
