@@ -1,10 +1,10 @@
 ﻿using System.Web.Http;
 
-namespace Bede.GO.Host.Mac
+namespace Bede.GO.Host
 {
     public static class WebApiConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static void Configure(HttpConfiguration config)
         {
             // Web API configuration and services
 
