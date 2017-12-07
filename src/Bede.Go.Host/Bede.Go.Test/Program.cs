@@ -25,8 +25,12 @@ namespace Bede.Go.Test
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
-            ConsoleHelper.Print("+++ Haversine Efficiency Test Tool +++\n" +
-                                "Running performance test of haversine functions...\n" +
+            ConsoleHelper.Print("*** Go Host Diagnostic Tools ***\n" +
+                                "Time to check our functions comrades.\n",
+                                MessageTypeEnum.Info);
+
+            ConsoleHelper.Print("+++ Haversine Efficiency Test+++\n" +
+                                "First run performance test of haversine functions...\n" +
                                 "Ensuring maximum autism.. Press any key to begin.\n",
                                 MessageTypeEnum.Info);
 
@@ -56,6 +60,17 @@ namespace Bede.Go.Test
             ConsoleHelper.Print("Distance calculated:" + DistanceHelper.GetDistanceBetween(l1, l2),
                                 MessageTypeEnum.Info);
 
+            ConsoleHelper.Print("Press any key to continue..\n",
+                                MessageTypeEnum.Info);
+
+            Console.ReadKey();
+
+            ConsoleHelper.Print("+++ Checking uniform point placement +++\n" +
+                                "Coordinates:",
+                                MessageTypeEnum.Info);
+
+            OutputGameLocationPositions();
+            
             ConsoleHelper.Print("Press any key to continue..\n",
                                 MessageTypeEnum.Info);
 
@@ -98,5 +113,24 @@ namespace Bede.Go.Test
             ConsoleHelper.Print("\n\n" + average + "\n", MessageTypeEnum.Info);
         }
 
+        private static void OutputGameLocationPositions()
+        {
+            var points = GameLocationsHelper.generateGameLocations(l1,3);
+            var count = 0;
+
+            foreach (var p in points)
+            {
+                ConsoleHelper.Print("+++POINT " + count.ToString() + "+++\n"
+                                    + "Latitude:" + p.Latitude + "\n"
+                                    + "Longitude:" + p.Longitude + "\n"
+                                    + "Distance From L1: " + DistanceHelper.GetDistanceBetween(l1, new Location() { Latitude = p.Latitude,
+                                        Longitude = p.Longitude
+                                    }).ToString()
+                                    + "\n",
+                                    MessageTypeEnum.Info);
+                count++;
+            }            
+        }
+            
     }
 }

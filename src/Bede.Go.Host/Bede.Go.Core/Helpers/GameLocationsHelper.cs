@@ -3,17 +3,17 @@ using System.Numerics;
 using System;
 using Bede.Go.Contracts;
 using Bede.Go.Core.Helpers;
+using System.Collections.Generic;
 
 namespace Bede.Go.Core.Helpers
 {
     public class GameLocationsHelper
     {
-        public double diameter = 0.025;
-        public int maxLocations =  3;
+        public static double diameter = 0.025;
            
-        public ArrayList generateGameLocations(Location centerPosition, int maxPoints)
+        public static List<Location> generateGameLocations(Location centerPosition, int maxPoints)
         {
-            ArrayList points = new ArrayList();
+            List<Location> points = new List<Location>();
 
             for (int i = 0; i < maxPoints; ++i)
             {
@@ -25,8 +25,8 @@ namespace Bede.Go.Core.Helpers
                 double py = distance * Math.Sin(theta) + centerPosition.Longitude;
 
                 Location pos = new Location {
-                                                Longitude = px,
-                                                Latitude = py
+                                                Latitude = px,
+                                                Longitude = py
                                             };
                                             
                 points.Add(pos);
