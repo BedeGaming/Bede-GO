@@ -1,12 +1,17 @@
 ﻿using Bede.Go.Contracts;
-using Bede.Go.Host.Models;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+using Bede.Go.Core.Helpers;
 using Bede.Go.Core.Services;
+using Bede.Go.Host.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace Bede.Go.Host.Controllers
 {
-    public class GamesController : Controller
+
+    public class GamesController : ApiController
     {
         private readonly ICrudService<Game> _gamesService;
 
@@ -15,24 +20,45 @@ namespace Bede.Go.Host.Controllers
             this._gamesService = gamesService;
         }
 
-        // GET: Games
-        public async Task<ActionResult> Index(GetGamesRequest request)
+        [HttpGet]
+        [Route("api/games")]
+        public async Task<IHttpActionResult> GetGames([FromUri]GetGamesRequest request)
         {
             if(request == null)
             {
-                this.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-                return Json(new ApiError { Error = "Request was not provided." });
-            }
-            
-            if(!ModelState.IsValid)
-            {
-                this.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-                return Json(new ApiError { Error = "Request was invalid.", Data = ModelState });
+                return BadRequest("Request was not provided");
             }
 
-            var games = await this._gamesService.Read(1);
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+
+            var currentLocation = new Location { Latitude = request.Latitude, Longitude = request.Longitude };
+
+            // Gets games within 1 degree of your geo-location, starting later than right now 
+            // (allows clients to show count-downs to 0 but isn't very useful for actually joining)
+            // Client probably shouldn't allow joining a game with less than 1 minute to go?
+            var games = (await this._gamesService.Query().ConfigureAwait(false))
+                            .Where(GamesHelper.ShowGameInSearch(currentLocation))
+                            .OrderBy(g => g.StartTime)
+                            .Take(15);
 
             return Json(games);
+        }
+
+        [HttpPost]
+        [Route("api/games/{id}/join")]
+        public async Task<IHttpActionResult> JoinGame(long id)
+        {
+            throw new NotImplementedException();
+
+            //var game = await _gamesService.Read(id);
+
+            //// Validate game can be joined
+            //if(await GamesHelper.CanGameBeJoined(game))
+            //{
+
+            //}
+
+            //return Json(game);
         }
     }
 }
