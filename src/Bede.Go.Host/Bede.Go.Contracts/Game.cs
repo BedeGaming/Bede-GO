@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data.Common;
+using Bede.Go.Contracts.Interfaces;
 
 namespace Bede.Go.Contracts
 {
-    public class Game
+    public class Game : IIdentifiable
     {
         public long Id { get; set; }
         public string Name { get; set; }
