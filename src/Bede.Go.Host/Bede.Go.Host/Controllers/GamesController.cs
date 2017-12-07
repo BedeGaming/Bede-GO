@@ -30,7 +30,7 @@ namespace Bede.Go.Host.Controllers
                 return Json(new ApiError { Error = "Request was invalid.", Data = ModelState });
             }
 
-            var games = await this._gamesService.List();
+            var games = await this._gamesService.Read(1);
 
             return Json(games);
         }

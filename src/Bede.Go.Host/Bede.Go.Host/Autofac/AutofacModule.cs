@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Bede.Go.Contracts;
 using Bede.Go.Core;
 using Bede.Go.Core.Services;
 
