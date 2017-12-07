@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
+using Bede.Go.Contracts;
 using Bede.Go.Contracts.Interfaces;
 
 namespace Bede.Go.Core.Services

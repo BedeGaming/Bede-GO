@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.Common;
+using System.Data.Entity;
 using Bede.Go.Contracts.Interfaces;
 
 namespace Bede.Go.Contracts
