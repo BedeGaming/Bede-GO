@@ -19,24 +19,41 @@ namespace Bede.Go.Host.Controllers
             this._gamesService = gamesService;
         }
 
-        // GET: Games
-        public async Task<ActionResult> Index(GetGamesRequest request)
+        [HttpGet]
+        [Route("api/games")]
+        public async Task<ActionResult> GetGames(GetGamesRequest request)
         {
             if(request == null)
             {
-                this.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+                SetBadRequestStatusCode();
                 return Json(new ApiError { Error = "Request was not provided." });
             }
             
             if(!ModelState.IsValid)
             {
-                this.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+                SetBadRequestStatusCode();
                 return Json(new ApiError { Error = "Request was invalid.", Data = ModelState });
             }
 
             var games = await this._gamesService.List();
 
             return Json(games);
+        }
+
+        private void SetBadRequestStatusCode()
+        {
+            this.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+        }
+
+        [HttpPost]
+        [Route("api/games/{id}/join")]
+        public async Task<ActionResult> JoinGame(long id)
+        {
+            var game = await _gamesService.Read<Game>(id);
+
+
+
+            return Json(game);
         }
     }
 }
