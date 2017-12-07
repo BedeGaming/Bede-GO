@@ -54,7 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\NumericExtensions.cs" />
+    <Compile Include="Helpers\DistanceHelper.cs" />
     <Compile Include="Helpers\GamesHelper.cs" />
+    <Compile Include="Helpers\GameLocationsHelper.cs" />
     <Compile Include="Services\CrudService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

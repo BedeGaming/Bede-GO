@@ -12,11 +12,11 @@ namespace Bede.Go.Host.Models
         [Required]
         [Range(-180, 180)]
         [JsonProperty("Lng")]
-        public decimal Longitude { get; set; }
+        public double Longitude { get; set; }
         [Required]
         [Range(-90,90)]
         [JsonProperty("Lat")]
-        public decimal Latitude { get; set; }
+        public double Latitude { get; set; }
         [Required]
         public decimal? Accuracy { get; set; } = 0.0M;
     }
