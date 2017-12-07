@@ -1,1 +1,1 @@
-﻿<%@ Application Inherits="Bede.GO.Host.Mac.Global" %>
+﻿<%@ Application Inherits="Bede.GO.Host.Global" %>
