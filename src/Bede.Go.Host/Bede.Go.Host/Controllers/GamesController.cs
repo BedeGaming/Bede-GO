@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace Bede.Go.Host.Controllers
 {
-
+    [Authorize]
     public class GamesController : ApiController
     {
         private readonly ICrudService<Game> _gamesService;
