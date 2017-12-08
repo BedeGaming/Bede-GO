@@ -14,8 +14,8 @@ namespace Bede.Go.Core.Services
 
         public async Task Create(Winner entity)
         {
-            const string createWinnerSql = "INSERT INTO [dbo.Winners] (GameId, PlayerId)" +
-                                           "VALUES (ParentGameId, ParentPlayerId)" +
+            const string createWinnerSql = "INSERT INTO [Winners] (GameId, PlayerId)" +
+                                           "VALUES (@ParentGameId, @ParentPlayerId)" +
                                            "SELECT @@SCOPE_IDENTITY";
             var createWinnerParameters = new
             {

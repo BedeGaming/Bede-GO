@@ -125,6 +125,9 @@ namespace Bede.Go.Host.Controllers
                             .OrderBy(g => g.StartTime)
                             .Take(15);
 
+
+            var test1 = await _gamesService.Query();
+            var test2 = test1.Where(GamesHelper.ShowGameInSearch(currentLocation));
             return Json(games);
         }
 
