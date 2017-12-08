@@ -25,31 +25,75 @@ namespace Bede.Go.Host.Controllers
         [Route("")]
         public IHttpActionResult Home()
         {
-            return Ok(((ClaimsIdentity)User.Identity).Claims);
+            return Ok($"Hello, {((ClaimsIdentity)User.Identity).Claims.Where(c => c.Type == "name").FirstOrDefault()?.Value}");
         }
 
         [HttpGet]
         [Route("api/games")]
         public async Task<IHttpActionResult> GetGames([FromUri]GetGamesRequest request)
         {
-            if(request == null)
+            return Json(new[]
             {
-                return BadRequest("Request was not provided");
-            }
+                new Game
+                {
+                    Id = 1,
+                    Distance = 1.0M,
+                    Location = new Location { Latitude = 54.8, Longitude = -0.5, Id = 1 },
+                    Name = "Ninja Challenge 3000",
+                    StartTime = DateTime.UtcNow.AddMinutes(5)
+                },
+                new Game
+                {
+                    Id = 2,
+                    Distance = 6M,
+                    Location = new Location { Latitude = 54.855, Longitude = -0.51, Id = 752 },
+                    Name = "CONTENDERS, ARE YOU READY?",
+                    StartTime = DateTime.UtcNow.AddMinutes(6).AddSeconds(21) // To show differences 
+                },
+                new Game
+                {
+                    Id = 3,
+                    Distance = 0.2M,
+                    Location = new Location { Latitude = 54.9, Longitude = -0.6, Id = 36 },
+                    Name = "Mecca BingoRun",
+                    StartTime = new DateTime(2017,12,08,16,45,0)
+                },
+                new Game
+                {
+                    Id = 4,
+                    Distance = 3.7M,
+                    Location = new Location { Latitude = 54.8, Longitude = -0.5, Id = 65 },
+                    Name = "Bede Gladiators",
+                    StartTime = DateTime.UtcNow.AddMinutes(14).AddSeconds(45)
+                },
+                new Game
+                {
+                    Id = 5,
+                    Distance = 16.9M,
+                    Location = new Location { Latitude = 54.8, Longitude = -0.5, Id = 435 },
+                    Name = "Casino CARNAGE",
+                    StartTime = DateTime.UtcNow.AddMinutes(5)
+                }
+            });
 
-            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            //if(request == null)
+            //{
+            //    return BadRequest("Request was not provided");
+            //}
 
-            var currentLocation = new Location { Latitude = request.Latitude, Longitude = request.Longitude };
+            //if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
-            // Gets games within 1 degree of your geo-location, starting later than right now 
-            // (allows clients to show count-downs to 0 but isn't very useful for actually joining)
-            // Client probably shouldn't allow joining a game with less than 1 minute to go?
-            var games = (await this._gamesService.Query().ConfigureAwait(false))
-                            .Where(GamesHelper.ShowGameInSearch(currentLocation))
-                            .OrderBy(g => g.StartTime)
-                            .Take(15);
+            //var currentLocation = new Location { Latitude = request.Latitude, Longitude = request.Longitude };
 
-            return Json(games);
+            //// Gets games within 1 degree of your geo-location, starting later than right now 
+            //// (allows clients to show count-downs to 0 but isn't very useful for actually joining)
+            //// Client probably shouldn't allow joining a game with less than 1 minute to go?
+            //var games = (await this._gamesService.Query().ConfigureAwait(false))
+            //                .Where(GamesHelper.ShowGameInSearch(currentLocation))
+            //                .OrderBy(g => g.StartTime)
+            //                .Take(15);
+
+            //return Json(games);
         }
 
         [HttpPost]

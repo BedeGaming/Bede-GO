@@ -9,15 +9,12 @@ namespace Bede.Go.Host.Models
 {
     public class GetGamesRequest
     {
-        [Required]
         [Range(-180, 180)]
         [JsonProperty("Lng")]
         public double Longitude { get; set; }
-        [Required]
         [Range(-90,90)]
         [JsonProperty("Lat")]
         public double Latitude { get; set; }
-        [Required]
         public decimal? Accuracy { get; set; } = 0.0M;
     }
 }
