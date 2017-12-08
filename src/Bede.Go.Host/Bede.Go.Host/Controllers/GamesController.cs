@@ -2,6 +2,7 @@
 using Bede.Go.Core.Helpers;
 using Bede.Go.Core.Services;
 using Bede.Go.Host.Models;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -36,42 +37,62 @@ namespace Bede.Go.Host.Controllers
                 new Game
                 {
                     Id = 1,
-                    Distance = 1.0M,
-                    Location = new Location { Latitude = 54.8, Longitude = -0.5, Id = 1 },
+                    Distance = 1.0,
+                    Locations = new [] 
+                    {
+                        new Location { Latitude = 54.8, Longitude = -0.5, Id = 1 }
+                    },
                     Name = "Ninja Challenge 3000",
                     StartTime = DateTime.UtcNow.AddMinutes(5)
                 },
                 new Game
                 {
                     Id = 2,
-                    Distance = 6M,
-                    Location = new Location { Latitude = 54.855, Longitude = -0.51, Id = 752 },
+                    Distance = 6,
+                    Locations = new [] 
+                    {
+                        new Location { Latitude = 54.8, Longitude = -0.5, Id = 1 },
+                        new Location { Latitude = 54.14, Longitude = -0.3, Id = 435 },
+                        new Location { Latitude = 54.9, Longitude = -0.6, Id = 36 }
+                    },
                     Name = "CONTENDERS, ARE YOU READY?",
-                    StartTime = DateTime.UtcNow.AddMinutes(6).AddSeconds(21) // To show differences 
+                    StartTime = DateTime.UtcNow.AddMinutes(12).AddSeconds(21) // To show differences 
                 },
                 new Game
                 {
                     Id = 3,
-                    Distance = 0.2M,
-                    Location = new Location { Latitude = 54.9, Longitude = -0.6, Id = 36 },
+                    Distance = 0.2,
+                    Locations = new [] 
+                    {
+                        new Location { Latitude = 54.9, Longitude = -0.6, Id = 36 },
+                        new Location { Latitude = 54.8, Longitude = -0.5, Id = 65 }
+                    },
                     Name = "Mecca BingoRun",
                     StartTime = new DateTime(2017,12,08,16,45,0)
                 },
                 new Game
                 {
                     Id = 4,
-                    Distance = 3.7M,
-                    Location = new Location { Latitude = 54.8, Longitude = -0.5, Id = 65 },
+                    Distance = 3.7,
+                    Locations = new [] 
+                    {
+                        new Location { Latitude = 54.8, Longitude = -0.5, Id = 65 },
+                        new Location { Latitude = 54.2, Longitude = -0.49, Id = 625 }
+                    },
                     Name = "Bede Gladiators",
                     StartTime = DateTime.UtcNow.AddMinutes(14).AddSeconds(45)
                 },
                 new Game
                 {
                     Id = 5,
-                    Distance = 16.9M,
-                    Location = new Location { Latitude = 54.8, Longitude = -0.5, Id = 435 },
+                    Distance = 16.9,
+                    Locations = new []
+                    {
+                        new Location { Latitude = 54.14, Longitude = -0.3, Id = 435 },
+                        new Location { Latitude = 54.2, Longitude = -0.49, Id = 625 }
+                    },
                     Name = "Casino CARNAGE",
-                    StartTime = DateTime.UtcNow.AddMinutes(5)
+                    StartTime = DateTime.UtcNow.AddMinutes(17)
                 }
             });
 
