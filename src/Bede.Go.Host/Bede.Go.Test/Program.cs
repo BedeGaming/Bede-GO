@@ -66,6 +66,8 @@ namespace Bede.Go.Test
             Console.ReadKey();
 
             ConsoleHelper.Print("+++ Checking uniform point placement +++\n" +
+                                "Outputting generated points values for inspection...\n" +
+                                "Needs expanding..\n" +
                                 "Coordinates:",
                                 MessageTypeEnum.Info);
 
@@ -115,7 +117,7 @@ namespace Bede.Go.Test
 
         private static void OutputGameLocationPositions()
         {
-            var points = GameLocationsHelper.generateGameLocations(l1,3);
+            var points = GameLocationsHelper.generateGameLocations(l1,6);
             var count = 0;
 
             foreach (var p in points)
