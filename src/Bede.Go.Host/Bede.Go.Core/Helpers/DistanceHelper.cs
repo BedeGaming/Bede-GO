@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bede.Go.Core.Extensions;
+using Bede.Go.Core.Configuration;
 
 namespace Bede.Go.Core.Helpers
 {
     public class DistanceHelper
     {
-        private static double R = 6371;
+        private static double R = CoreConfiguration.RadiusForDistance;
         public static double GetDistanceBetween(Location current, Location destination)
         {
             var lat = (destination.Latitude - current.Latitude).ToRadians();

@@ -36,6 +36,7 @@ namespace Bede.Go.Test
 
             Action defaultGeo = new Action(GetDistance);
             Action fastGeo = new Action(GetCustomDistance);
+            Action createLocations = new Action(OutputGameLocationPositions);
 
             Console.ReadKey();
 
@@ -72,7 +73,7 @@ namespace Bede.Go.Test
                                 MessageTypeEnum.Info);
 
             OutputGameLocationPositions();
-            
+
             ConsoleHelper.Print("Press any key to continue..\n",
                                 MessageTypeEnum.Info);
 
@@ -112,7 +113,7 @@ namespace Bede.Go.Test
 
             var average = (results.Sum(x => Convert.ToInt32(x)) / iterations).ToString();
 
-            ConsoleHelper.Print("\n\n" + average + "\n", MessageTypeEnum.Info);
+            ConsoleHelper.Print("\n\nBenchmark Results\n" + average + " ticks\n", MessageTypeEnum.Info);
         }
 
         private static void OutputGameLocationPositions()
