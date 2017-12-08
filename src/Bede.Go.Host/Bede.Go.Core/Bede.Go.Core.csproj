@@ -66,7 +66,10 @@
     <Compile Include="Helpers\GameLocationsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GameCrudService.cs" />
+    <Compile Include="Services\GameResultCrudService.cs" />
     <Compile Include="Services\ICrudService.cs" />
+    <Compile Include="Services\PlayerCrudService.cs" />
+    <Compile Include="Services\WinnersCrudService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bede.Go.Contracts\Bede.Go.Contracts.csproj">

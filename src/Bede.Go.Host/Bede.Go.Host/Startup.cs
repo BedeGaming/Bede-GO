@@ -14,13 +14,13 @@ namespace Bede.Go.Host
         {
             ConfigureAuth(app);
 
-            var connectionString = ConfigurationManager.AppSettings["BedeGoConnectionString"];
-            var upgrader = DeployChanges.To
-                .SqlDatabase(connectionString)
-                .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-                .Build();
-            EnsureDatabase.For.SqlDatabase(connectionString);
-            upgrader.PerformUpgrade();
+            //var connectionString = ConfigurationManager.AppSettings["BedeGoConnectionString"];
+            //var upgrader = DeployChanges.To
+            //    .SqlDatabase(connectionString)
+            //    .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+            //    .Build();
+            //EnsureDatabase.For.SqlDatabase(connectionString);
+            //upgrader.PerformUpgrade();
         }
     }
 }

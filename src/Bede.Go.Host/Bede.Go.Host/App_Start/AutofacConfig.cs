@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
 using Bede.Go.Contracts;
-using Bede.Go.Core;
 using Bede.Go.Core.Services;
 using System.Web.Http;
 
@@ -15,6 +14,12 @@ namespace Bede.Go.Host.Autofac
 
             builder.RegisterType<GameCrudService>()
                 .As <ICrudService<Game>>();
+            builder.RegisterType<WinnersCrudService>()
+                .As <ICrudService<Winner>>();
+            builder.RegisterType<GameResultCrudService>()
+                .As <ICrudService<GameResult>>();
+            builder.RegisterType<PlayerCrudService>()
+                .As <ICrudService<Player>>();
 
             builder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
 

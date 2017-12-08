@@ -233,6 +233,8 @@
     </Compile>
     <Compile Include="Models\ApiError.cs" />
     <Compile Include="Models\GetGamesRequest.cs" />
+    <Compile Include="Models\GetWinnersResponse.cs" />
+    <Compile Include="Models\UpdateGamesRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

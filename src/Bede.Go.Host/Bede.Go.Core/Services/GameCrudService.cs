@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Bede.Go.Contracts;
 using Dapper;
@@ -14,7 +11,7 @@ namespace Bede.Go.Core.Services
 {
     public class GameCrudService :ICrudService<Game>
     {
-        private IDbConnection _connection = new SqlConnection(ConfigurationManager.AppSettings["BedeGoConnectionString"]);
+        private readonly IDbConnection _connection = new SqlConnection(ConfigurationManager.AppSettings["BedeGoConnectionString"]);
         
         public async Task Create(Game entity)
         {
@@ -43,8 +40,8 @@ namespace Bede.Go.Core.Services
                     LocationAccuracy = location.Accuracy,
                     GameId = gameId
                 };
-                var createdLocationCommand = new CommandDefinition(createLocationsSql, locationParameters);
-                await _connection.QueryAsync(createLocationsSql);
+                var createLocationCommand = new CommandDefinition(createLocationsSql, locationParameters);
+                await _connection.QueryAsync(createLocationCommand);
             }
         }
 
