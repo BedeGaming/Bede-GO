@@ -5,6 +5,7 @@ using Bede.Go.Host.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -18,6 +19,13 @@ namespace Bede.Go.Host.Controllers
         public GamesController(ICrudService<Game> gamesService)
         {
             this._gamesService = gamesService;
+        }
+
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult Home()
+        {
+            return Ok(((ClaimsIdentity)User.Identity).Claims);
         }
 
         [HttpGet]
