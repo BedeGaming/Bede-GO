@@ -2,8 +2,6 @@
 using Bede.Go.Core.Helpers;
 using Bede.Go.Core.Services;
 using Bede.Go.Host.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -16,7 +14,8 @@ namespace Bede.Go.Host.Controllers
     {
         private readonly ICrudService<Game> _gamesService;
 
-        public GamesController(ICrudService<Game> gamesService)
+        public GamesController(
+            ICrudService<Game> gamesService)
         {
             this._gamesService = gamesService;
         }
@@ -98,19 +97,20 @@ namespace Bede.Go.Host.Controllers
 
         [HttpPost]
         [Route("api/games/{id}/join")]
-        public async Task<IHttpActionResult> JoinGame(long id)
+        public async Task<IHttpActionResult> JoinGame(long id, [FromUri]GetGamesRequest request)
         {
-            throw new NotImplementedException();
+            var currentLocation = new Location { Latitude = request.Latitude, Longitude = request.Longitude };
+            var game = await _gamesService.Read(id).ConfigureAwait(false);
 
-            //var game = await _gamesService.Read(id);
+            if (game.CanPlayerJoinGame(currentLocation))
+            {
+                game.Players.ToList().Add(new Player { Email = ClaimsPrincipal.Current.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value });
+                await _gamesService.Update(game).ConfigureAwait(false);
 
-            //// Validate game can be joined
-            //if(await GamesHelper.CanGameBeJoined(game))
-            //{
+                return Json(game);
+            }
 
-            //}
-
-            //return Json(game);
+            return InternalServerError();
         }
     }
 }

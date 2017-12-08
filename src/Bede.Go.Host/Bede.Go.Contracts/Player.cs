@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bede.Go.Contracts.Interfaces;
 
 namespace Bede.Go.Contracts
 {
-    public class Player
+    public class Player : IIdentifiable
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string Email  { get; set; }
+        public int GameId { get; set; }
     }
 }
