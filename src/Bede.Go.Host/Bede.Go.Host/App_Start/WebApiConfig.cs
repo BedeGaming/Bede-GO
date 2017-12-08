@@ -10,6 +10,8 @@ namespace Bede.Go.Host
         public static void Configure(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.SuppressHostPrincipal();
+            config.Filters.Add(new InsecureBearerTokenAuthFilter("Bearer"));
 
             // Web API routes
             config.MapHttpAttributeRoutes();
