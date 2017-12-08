@@ -15,8 +15,8 @@ namespace Bede.Go.Core.Services
         
         public async Task Create(Game entity)
         {
-            const string createGameSql = "INSERT INTO [dbo.Games] (Name, StartTime, PrizePot, EntryFee, CurrencyCode)" +
-                                         "VALUES (GameName, GameStartTime, GamePrizePot, GameEntryFee, GameCurrencyCode)" +
+            const string createGameSql = "INSERT INTO [Games] (Name, StartTime, PrizePot, EntryFee, CurrencyCode)" +
+                                         "VALUES (@GameName, @GameStartTime, @GamePrizePot, @GameEntryFee, @GameCurrencyCode)" +
                                          "SELECT @@SCOPE_IDENTITY";
             var createGameParameters = new
             {
@@ -29,8 +29,8 @@ namespace Bede.Go.Core.Services
             var createGameCommand = new CommandDefinition(createGameSql, createGameParameters);
             var gameId = (await _connection.QueryAsync<int>(createGameCommand)).Single();
 
-            const string createLocationsSql = "INSERT INTO [dbo.Locations] (Longitiude, Latitude, Accuracy, GameId)" +
-                                              "VALUES (LocationLongitiude, LocationLatitude, LocationAccuracy)";
+            const string createLocationsSql = "INSERT INTO [Locations] (Longitiude, Latitude, Accuracy, GameId)" +
+                                              "VALUES (@LocationLongitiude, @LocationLatitude, @LocationAccuracy)";
             foreach (var location in entity.Locations)
             {
                 var locationParameters = new
@@ -47,7 +47,7 @@ namespace Bede.Go.Core.Services
 
         public async Task<Game> Read(long id)
         {
-            const string getGameSql = "SELECT * FROM [dbo.Games] WHERE [Id] = GameId";
+            const string getGameSql = "SELECT * FROM [Games] WHERE [Id] = @GameId";
             var getGameParameters = new
             {
                 GameId = id
@@ -59,12 +59,12 @@ namespace Bede.Go.Core.Services
                 ParentGameId = game.Id
             };
             
-            const string getLocationsSql = "SELECT * FROM [dbo.Locations] WHERE [GameId] = ParentGameId";
+            const string getLocationsSql = "SELECT * FROM [Locations] WHERE [GameId] = @ParentGameId";
             var getLocationsCommand = new CommandDefinition(getLocationsSql, parentGameParameters);
             IEnumerable<Location> locations = await _connection.QueryAsync<Location>(getLocationsCommand);
             game.Locations = locations;
             
-            const string getPlayersSql = "SELECT * FROM [dbo.Players] WHERE [GameId] = ParentGameId";
+            const string getPlayersSql = "SELECT * FROM [Players] WHERE [GameId] = @ParentGameId";
             var getPlayersCommand = new CommandDefinition(getPlayersSql, parentGameParameters);
             IEnumerable<Player> players = await _connection.QueryAsync<Player>(getPlayersCommand);
             game.Players = players;
@@ -84,9 +84,9 @@ namespace Bede.Go.Core.Services
     
         public async Task Update(Game entity)
         {
-            const string updateGameSql = "UPDATE [dbo.Games]" +
-                                         "SET Name = GameName, StartTime = GameStartTime, PrizePot = GamePrizePot, EntryFee = GameEntryFee, CurrencyCode = GameCurrencyCode" +
-                                         "WHERE [Id] = GameId";
+            const string updateGameSql = "UPDATE [Games]" +
+                                         "SET Name = @GameName, StartTime = @GameStartTime, PrizePot = @GamePrizePot, EntryFee = @GameEntryFee, CurrencyCode = @GameCurrencyCode" +
+                                         "WHERE [Id] = @GameId";
             var updateGameParameters = new
             {
                 GameName = entity.Name,
@@ -101,13 +101,13 @@ namespace Bede.Go.Core.Services
             
             foreach (var location in entity.Locations)
             {
-                const string updateLocationIfNotExistsSql = "If NOT EXISTS (SELECT * [dbo.Locations] WHERE" +
-                                                                "[GameId] = ParentGameId AND" +
-                                                                "[Longitiude] = LocationLongitude AND" +
-                                                                "[Latitiude] = LocationLatitude)" +
+                const string updateLocationIfNotExistsSql = "If NOT EXISTS (SELECT * [Locations] WHERE" +
+                                                                "[GameId] = @ParentGameId AND" +
+                                                                "[Longitiude] = @LocationLongitude AND" +
+                                                                "[Latitiude] = @LocationLatitude)" +
                                                             "BEGIN" +
-                                                                "INSERT INTO [dbo.Locations] (Longitude, Latitude, GameId)" +
-                                                                "VALUES (LocationLongitude, LocationLatitude, ParentGameId)" +
+                                                                "INSERT INTO [Locations] (Longitude, Latitude, GameId)" +
+                                                                "VALUES (@LocationLongitude, @LocationLatitude, @ParentGameId)" +
                                                             "END";
                 var updateLocationParameters = new
                 {
@@ -122,12 +122,12 @@ namespace Bede.Go.Core.Services
             
             foreach (var player in entity.Players)
             {
-                const string updatePlayerIfNotExistsSql = "If NOT EXISTS (SELECT * [dbo.Player] WHERE" +
-                                                              "[GameId] = ParentGameId AND" +
-                                                              "[Email] = PlayerEmail)" +
+                const string updatePlayerIfNotExistsSql = "If NOT EXISTS (SELECT * [Player] WHERE" +
+                                                              "[GameId] = @ParentGameId AND" +
+                                                              "[Email] = @PlayerEmail)" +
                                                           "BEGIN" +
-                                                              "INSERT INTO [dbo.Players] (Email, GameId)" +
-                                                              "VALUES (PlayerEmail, ParentGameId)" +
+                                                              "INSERT INTO [Players] (Email, GameId)" +
+                                                              "VALUES (@PlayerEmail, @ParentGameId)" +
                                                           "END";
                 var updatePlayerParameters = new
                 {
@@ -147,7 +147,7 @@ namespace Bede.Go.Core.Services
 
         public async Task<IQueryable<Game>> Query()
         {
-            const string getAllGamesSql = "SELECT * from [dbo.Games]";
+            const string getAllGamesSql = "SELECT * from [Games]";
             var getAllGamesCommand = new CommandDefinition(getAllGamesSql);
             IEnumerable<Game> games = await _connection.QueryAsync<Game>(getAllGamesCommand);
             
@@ -158,17 +158,17 @@ namespace Bede.Go.Core.Services
                     ParentGameId = game.Id
                 };
 
-                const string getLocationsSql = "SELECT * FROM [dbo.Locations] WHERE [GameId] = ParentGameId";
+                const string getLocationsSql = "SELECT * FROM [Locations] WHERE [GameId] = @ParentGameId";
                 var getLocationsCommand = new CommandDefinition(getLocationsSql, parentGameParameters);
                 IEnumerable<Location> locations = await _connection.QueryAsync<Location>(getLocationsCommand);
                 game.Locations = locations;
 
-                const string getPlayersSql = "SELECT * FROM [dbo.Players] WHERE [GameId] = ParentGameId";
+                const string getPlayersSql = "SELECT * FROM [Players] WHERE [GameId] = @ParentGameId";
                 var getPlayersCommand = new CommandDefinition(getPlayersSql, parentGameParameters);
                 IEnumerable<Player> players = await _connection.QueryAsync<Player>(getPlayersCommand);
                 game.Players = players;
             }
-            return games?.AsQueryable();
+            return games.AsQueryable();
         }
     }
 }

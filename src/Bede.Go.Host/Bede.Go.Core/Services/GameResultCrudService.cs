@@ -14,8 +14,8 @@ namespace Bede.Go.Core.Services
 
         public async Task Create(GameResult entity)
         {
-            const string createGameResultSql = "INSERT INTO [dbo.GameResults] (GameId, LocationId)" +
-                                               "VALUES (ParentGameId, ParentLocationId)";
+            const string createGameResultSql = "INSERT INTO [GameResults] (GameId, LocationId)" +
+                                               "VALUES (@ParentGameId, @ParentLocationId)";
             var createGameResultParameters = new
             {
                 ParentGameId = entity.GameId,
@@ -47,7 +47,7 @@ namespace Bede.Go.Core.Services
 
         public async Task<IQueryable<GameResult>> Query()
         {
-            const string getAllGameResultsSql = "SELECT * FROM [dbo.GameResults]";
+            const string getAllGameResultsSql = "SELECT * FROM [GameResults]";
             var getAllGameResultsCommand = new CommandDefinition(getAllGameResultsSql);
             var gameResults = await _connection.QueryAsync<GameResult>(getAllGameResultsCommand);
             return gameResults.AsQueryable();

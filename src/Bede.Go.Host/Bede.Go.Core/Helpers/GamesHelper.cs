@@ -7,7 +7,7 @@ namespace Bede.Go.Core.Helpers
 {
     public static class GamesHelper
     {
-        private static readonly double DistanceConst = 0.05;
+        private static readonly double DistanceConst = 0.5;
 
         public static Expression<Func<Game, bool>> ShowGameInSearch(Location currentLocation)
         {

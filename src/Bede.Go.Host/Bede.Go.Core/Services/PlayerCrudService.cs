@@ -19,7 +19,7 @@ namespace Bede.Go.Core.Services
 
         public async Task<Player> Read(long id)
         {
-            const string readPlayerSql = "SELECT * FROM [dbo.Players] Where [Id] = PlayerId";
+            const string readPlayerSql = "SELECT * FROM [Players] Where [Id] = @PlayerId";
             var readPlayerParameters = new
             {
                 PlayerId = id
