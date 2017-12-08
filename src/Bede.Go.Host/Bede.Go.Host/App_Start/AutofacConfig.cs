@@ -13,11 +13,8 @@ namespace Bede.Go.Host.Autofac
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterGeneric(typeof(Context<>))
-                .AsSelf();
-
-            builder.RegisterGeneric(typeof(CrudService<>))
-                .As(typeof(ICrudService<>));
+            builder.RegisterType<GameCrudService>()
+                .As <ICrudService<Game>>();
 
             builder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
 

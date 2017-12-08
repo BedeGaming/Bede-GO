@@ -35,8 +35,8 @@
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.4.3.0\lib\net40\EntityFramework.dll</HintPath>
+    <Reference Include="Dapper, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.4\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -60,8 +60,9 @@
     <Compile Include="Helpers\DistanceHelper.cs" />
     <Compile Include="Helpers\GamesHelper.cs" />
     <Compile Include="Helpers\GameLocationsHelper.cs" />
-    <Compile Include="Services\CrudService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GameCrudService.cs" />
+    <Compile Include="Services\ICrudService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bede.Go.Contracts\Bede.Go.Contracts.csproj">

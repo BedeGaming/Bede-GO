@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
+using Bede.Go.Contracts.Interfaces;
+using Bede.Go.Contracts;
 
 namespace Bede.Go.Contracts
 {
-    public class Location
+    public class Location : IIdentifiable
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         [Required]
         [Range(-180,180)]
         public double Longitude { get; set; }

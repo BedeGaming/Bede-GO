@@ -1,28 +1,28 @@
 ﻿using Bede.Go.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bede.Go.Core.Helpers
 {
-    public class GamesHelper
+    public static class GamesHelper
     {
+        private static readonly double DistanceConst = 0.05;
+
         public static Expression<Func<Game, bool>> ShowGameInSearch(Location currentLocation)
         {
-            return game =>
-                    game.Location.Latitude < currentLocation.Latitude + 1
-                    && game.Location.Latitude > currentLocation.Latitude - 1
-                    && game.Location.Longitude < currentLocation.Longitude + 1
-                    && game.Location.Longitude > currentLocation.Longitude - 1
-                    && game.StartTime > DateTime.UtcNow;
+            return game => game.PlayerIsInRange(currentLocation)
+                        && game.StartTime > DateTime.UtcNow.AddSeconds(30);
         }
 
-        public static async Task<bool> CanPlayerJoinGame(Player currentPlayer, Game game)
+        public static bool CanPlayerJoinGame(this Game game, Location currentLocation)
         {
-            return await Task.FromResult(true);
+            return PlayerIsInRange(game, currentLocation);
+        }
+
+        private static bool PlayerIsInRange(this Game game, Location playerLocation)
+        {
+            return game.Locations.Any(gameLocation => DistanceHelper.GetDistanceBetween(gameLocation, playerLocation) < DistanceConst);
         }
     }
 }
