@@ -24,8 +24,8 @@ namespace Bede.Go.Host
                 MetadataAddress = "https://accounts.google.com/.well-known/openid-configuration",
                 ClientId = "777354584083-c48m9l02onp5ropfcuiri78j4jgrmkqo.apps.googleusercontent.com",
                 ClientSecret = "rKf9eK5EzJIo6x-JbHteOi0u",
-                PostLogoutRedirectUri = "https://bedego.azurewebsites.net",
-                RedirectUri = "https://bedego.azurewebsites.net",
+                PostLogoutRedirectUri = "https://localhost:44396",
+                RedirectUri = "https://localhost:44396",
                 Notifications = new OpenIdConnectAuthenticationNotifications
                 {
 
