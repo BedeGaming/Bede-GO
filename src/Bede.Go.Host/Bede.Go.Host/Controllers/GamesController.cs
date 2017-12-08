@@ -1,8 +1,8 @@
-﻿using Bede.Go.Contracts;
+﻿using System;
+using Bede.Go.Contracts;
 using Bede.Go.Core.Helpers;
 using Bede.Go.Core.Services;
 using Bede.Go.Host.Models;
-using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -118,7 +118,7 @@ namespace Bede.Go.Host.Controllers
 
         [HttpPost]
         [Route("api/games/{id}/join")]
-        public async Task<IHttpActionResult> JoinGame(long id, [FromUri]GetGamesRequest request)
+        public async Task<IHttpActionResult> JoinGame(int id, [FromUri]GetGamesRequest request)
         {
             var currentLocation = new Location { Latitude = request.Latitude, Longitude = request.Longitude };
             var game = await _gamesService.Read(id).ConfigureAwait(false);
@@ -132,6 +132,27 @@ namespace Bede.Go.Host.Controllers
             }
 
             return InternalServerError();
+        }
+
+        [HttpPost]
+        [Route("api/player/location")]
+        public async Task<IHttpActionResult> PingGame([FromBody] UpdatePlayerLocationRequest request)
+        {
+            var currentLocation = new Location { Latitude = request.Latitude, Longitude = request.Longitude };
+            var game = await _gamesService.Read(request.GameId).ConfigureAwait(false);
+
+            if (DateTime.UtcNow > game.StartTime)
+            {
+                return BadRequest("Game has not finished");
+            }
+
+            if (game.Locations.Any(l => DistanceHelper.GetDistanceBetween(l, currentLocation) < 0.0001))
+            {
+                // TODO This person is on the point, save this
+                return Created("", true);
+            }
+
+            return Created("", false);
         }
     }
 }
