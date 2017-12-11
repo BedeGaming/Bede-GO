@@ -48,7 +48,7 @@ namespace Bede.Go.Core.Services
 
         public async Task<IQueryable<Winner>> Query()
         {
-            const string readAllWinnersSql = "SELECT * FROM [dbo.Winners]";
+            const string readAllWinnersSql = "SELECT * FROM [Winners]";
             var readAllWinnersCommand = new CommandDefinition(readAllWinnersSql);
             var winners = await _connection.QueryAsync<Winner>(readAllWinnersCommand);
             return winners.AsQueryable();

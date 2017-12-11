@@ -41,7 +41,7 @@ namespace Bede.Go.Core.Services
                     GameId = gameId
                 };
                 var createLocationCommand = new CommandDefinition(createLocationsSql, locationParameters);
-                await _connection.QueryAsync(createLocationCommand);
+                await _connection.ExecuteAsync(createLocationCommand);
             }
         }
 
@@ -84,24 +84,24 @@ namespace Bede.Go.Core.Services
     
         public async Task Update(Game entity)
         {
-            const string updateGameSql = "UPDATE [Games]" +
-                                         "SET Name = @GameName, StartTime = @GameStartTime, PrizePot = @GamePrizePot, EntryFee = @GameEntryFee, CurrencyCode = @GameCurrencyCode" +
+            const string updateGameSql = "UPDATE [Games] " +
+                                         "SET Name = @GameName, StartTime = @GameStartTime, PrizePot = @GamePrizePot, EntryFee = @GameEntryFee, CurrencyCode = @GameCurrencyCode " +
                                          "WHERE [Id] = @GameId";
             var updateGameParameters = new
             {
                 GameName = entity.Name,
                 GameStartTime = entity.StartTime,
                 GamePrizePot = entity.PrizePot,
-                GameEntryGee = entity.Entryfee,
-                GameEntryFee = entity.CurrencyCode,
+                GameEntryFee = entity.Entryfee,
+                GameCurrencyCode = entity.CurrencyCode,
                 GameId = entity.Id
             };
             var updateGameCommand = new CommandDefinition(updateGameSql, updateGameParameters);
-            await _connection.QueryAsync(updateGameCommand);
+            await _connection.ExecuteAsync(updateGameCommand);
             
             foreach (var location in entity.Locations)
             {
-                const string updateLocationIfNotExistsSql = "If NOT EXISTS (SELECT * [Locations] WHERE" +
+                const string updateLocationIfNotExistsSql = "If NOT EXISTS (SELECT * FROM [Locations] WHERE" +
                                                                 "[GameId] = @ParentGameId AND" +
                                                                 "[Longitiude] = @LocationLongitude AND" +
                                                                 "[Latitiude] = @LocationLatitude)" +
@@ -116,18 +116,18 @@ namespace Bede.Go.Core.Services
                     ParentGameId = entity.Id
                 };
                 var updateLocationCommand = new CommandDefinition(updateLocationIfNotExistsSql, updateLocationParameters);
-                await _connection.QueryAsync(updateGameCommand);
+                await _connection.ExecuteAsync(updateGameCommand);
                 
             }
             
             foreach (var player in entity.Players)
             {
-                const string updatePlayerIfNotExistsSql = "If NOT EXISTS (SELECT * [Player] WHERE" +
-                                                              "[GameId] = @ParentGameId AND" +
-                                                              "[Email] = @PlayerEmail)" +
-                                                          "BEGIN" +
-                                                              "INSERT INTO [Players] (Email, GameId)" +
-                                                              "VALUES (@PlayerEmail, @ParentGameId)" +
+                const string updatePlayerIfNotExistsSql = "If NOT EXISTS (SELECT * FROM [Players] WHERE " +
+                                                              "[GameId] = @ParentGameId AND " +
+                                                              "[Email] = @PlayerEmail) " +
+                                                          "BEGIN " +
+                                                              "INSERT INTO [Players] (Email, GameId) " +
+                                                              "VALUES (@PlayerEmail, @ParentGameId) " +
                                                           "END";
                 var updatePlayerParameters = new
                 {
@@ -135,7 +135,7 @@ namespace Bede.Go.Core.Services
                     ParentGameId = entity.Id
                 };
                 var updatePlayerCommand = new CommandDefinition(updatePlayerIfNotExistsSql, updatePlayerParameters);
-                await _connection.QueryAsync(updatePlayerCommand);
+                await _connection.ExecuteAsync(updatePlayerCommand);
             }
 
         }

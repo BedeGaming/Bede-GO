@@ -7,7 +7,7 @@ namespace Bede.Go.Core.Helpers
 {
     public static class GamesHelper
     {
-        private static readonly double DistanceConst = 0.5;
+        private static readonly double DistanceConst = 100;
 
         public static Expression<Func<Game, bool>> ShowGameInSearch(Location currentLocation)
         {
@@ -17,12 +17,13 @@ namespace Bede.Go.Core.Helpers
 
         public static bool CanPlayerJoinGame(this Game game, Location currentLocation)
         {
-            return PlayerIsInRange(game, currentLocation);
+            return true; //PlayerIsInRange(game, currentLocation);
         }
 
         private static bool PlayerIsInRange(this Game game, Location playerLocation)
         {
-            return game.Locations.Any(gameLocation => DistanceHelper.GetDistanceBetween(gameLocation, playerLocation) < DistanceConst);
+            return true;
+            // return game.Locations.Any(gameLocation => DistanceHelper.GetDistanceBetween(gameLocation, playerLocation) < DistanceConst);
         }
     }
 }

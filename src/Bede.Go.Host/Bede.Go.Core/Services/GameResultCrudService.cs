@@ -22,7 +22,7 @@ namespace Bede.Go.Core.Services
                 ParentLocationId = entity.LocationId
             };
             var createGameResultCommand = new CommandDefinition(createGameResultSql, createGameResultParameters);
-            await _connection.QueryAsync(createGameResultCommand);
+            await _connection.ExecuteAsync(createGameResultCommand);
         }
 
         public Task<GameResult> Read(long id)
